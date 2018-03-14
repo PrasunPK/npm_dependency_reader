@@ -33,7 +33,7 @@ const addSpace = (length) => {
 }
 
 const getnameWithPadding = (name, collection, extra) => {
-  return name + addSpace(!extra ? (findLongestLength(collection) - name.length)+2 : 3);
+  return name + addSpace(!extra ? (findLongestLength(collection) - name.length)+5 : 5);
 };
 
 const calculateTotalLengthForHeaderBorder = () => {
@@ -42,7 +42,7 @@ const calculateTotalLengthForHeaderBorder = () => {
 
 const createTopBorder = () => {
   let border = horizontalSeparator;
-  for (var i = 0; i < calculateTotalLengthForHeaderBorder()+2; i++) {
+  for (var i = 0; i < calculateTotalLengthForHeaderBorder()+8; i++) {
     border += horizontalSeparator;
   }
   return border += horizontalSeparator;
