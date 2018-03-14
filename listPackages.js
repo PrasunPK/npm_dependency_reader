@@ -1,5 +1,5 @@
 const fs = require('fs');
-const packageContent = fs.readFileSync('./package.json','UTF-8');
+const packageContent = fs.readFileSync(process.argv[2] + '/package.json','UTF-8');
 const jsonData = JSON.parse(packageContent);
 
 const dependencies = jsonData.dependencies;
@@ -33,7 +33,7 @@ const addSpace = (length) => {
 }
 
 const getnameWithPadding = (name, collection, extra) => {
-  return name + addSpace(!extra ? (findLongestLength(collection) - name.length) : 2);
+  return name + addSpace(!extra ? (findLongestLength(collection) - name.length)+2 : 3);
 };
 
 const calculateTotalLengthForHeaderBorder = () => {
@@ -42,7 +42,7 @@ const calculateTotalLengthForHeaderBorder = () => {
 
 const createTopBorder = () => {
   let border = horizontalSeparator;
-  for (var i = 0; i < calculateTotalLengthForHeaderBorder(); i++) {
+  for (var i = 0; i < calculateTotalLengthForHeaderBorder()+2; i++) {
     border += horizontalSeparator;
   }
   return border += horizontalSeparator;
@@ -62,7 +62,7 @@ const createHeader = () => {
 let text = createHeader();
 for (var i = 0; i < dependencyNames.length; i++) {
   text += verticalSeparator + addSpace(1) + getnameWithPadding(dependencyNames[i], dependencyNames) + addSpace(1) + verticalSeparator +
-                       addSpace(1) + getnameWithPadding(dependencyVersions[i], dependencyVersions, true) + addSpace(1) + verticalSeparator + '\n';
+                       addSpace(1) + getnameWithPadding(dependencyVersions[i], dependencyVersions, false) + addSpace(1) + verticalSeparator + '\n';
 }
 text+=createTopBorder();
 
