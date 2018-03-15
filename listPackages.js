@@ -1,23 +1,16 @@
 const fs = require('fs');
-const packageContent = fs.readFileSync(process.argv[2] + '/package.json','UTF-8');
+
+const packageContent = fs.readFileSync((process.argv[2] || '.') + '/package.json', 'UTF-8');
 const jsonData = JSON.parse(packageContent);
 
-const dependencies = jsonData.dependencies;
-
-//console version
-// ----------------------------------
-// | component name      | version  |
-// ----------------------------------
-// | comp 1              | 0.3.2    |
-// | comp 2              | 1.3.1    |
-// | comp 4              | 0.3.4    |
-// ----------------------------------
+const dependencies = jsonData.dependencies || [];
+const peerDependencies = jsonData.peerDependencies || [];
 
 const horizontalSeparator = "-";
 const verticalSeparator = "|";
 
-const dependencyNames = Object.keys(dependencies);
-const dependencyVersions = Object.values(dependencies);
+const dependencyNames = Object.keys(dependencies).concat(Object.keys(peerDependencies));
+const dependencyVersions = Object.values(dependencies).concat(Object.values(peerDependencies));
 
 const findLongestLength = (collection) => {
   var longest = collection.reduce(function (a, b) { return a.length > b.length ? a : b; });
@@ -33,7 +26,7 @@ const addSpace = (length) => {
 }
 
 const getnameWithPadding = (name, collection, extra) => {
-  return name + addSpace(!extra ? (findLongestLength(collection) - name.length)+5 : 5);
+  return name + addSpace(!extra ? (findLongestLength(collection) - name.length)+5 : 6);
 };
 
 const calculateTotalLengthForHeaderBorder = () => {
